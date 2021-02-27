@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "C:\\NewPython\\python.exe",
+    "python.formatting.provider": "yapf"
+}

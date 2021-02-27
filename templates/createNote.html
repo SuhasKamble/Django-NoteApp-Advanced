@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-3">
+    <h2 class="my-3">Add a Note</h2>
+
+    <form method="POST" action="/createNote">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Add a Title</label>
+            <input type="text" class="form-control" id="title" value="{{note.title}}" name="title">
+        </div>
+        <div class="mb-3">
+            <label for="summary" class="form-label">Add a Summary</label>
+            <textarea class="form-control" id="summary" name="summary" rows="3">{{note.summary}}</textarea>
+
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Add a Description</label>
+            <textarea id="mytextarea" name="content">{{note.content}}</textarea>
+
+        </div>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock body %}
+
+{% block script %}
+<script>
+    tinymce.init({
+        selector: '#mytextarea',
+        plugins: [
+            'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+            'table emoticons template paste help'
+        ],
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+            'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+            'forecolor backcolor emoticons | help',
+        menu: {
+            favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+        },
+        menubar: 'favs file edit view insert format tools table help',
+        content_css: 'css/content.css'
+    });
+
+
+
+    try {
+        setTimeout(() => {
+
+            document.querySelector('.tox-notification--warning').style.display = "none"
+        }, 1000)
+
+        setInterval(() => {
+            document.querySelector('.tox-notification--warning').style.display = "none"
+        }, 2000)
+
+    } catch (e) {
+        console.log(e)
+    }
+</script>
+{% endblock script %}

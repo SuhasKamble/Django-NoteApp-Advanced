@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock title %}
+
+{% block body %}
+<div class="container my-4">
+
+    <h2 class="my-3">Your Search:-</h2>
+    {% if allNotes|length < 1 %} <div class="p-4">
+        <p><b>{{query}}</b>... did not match any note.</p>
+        <br>
+        <p>Suggestions:</p>
+
+        <ul>
+            <li><b>-</b> Make sure that all words are spelled correctly.</li>
+            <li><b>-</b> Try different keywords.</li>
+            <li> <b>-</b> Try more general keywords</li>
+        </ul>
+</div>
+{% endif %}
+{% for note in allNotes %}
+<div class="row my-3 g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary">Suhas</strong>
+        <h3 class="mb-0">{{note.title}}</h3>
+        <div class="mb-1 text-muted">{{note.timestamp}}</div>
+        <p class="card-text mb-auto">{{note.summary | truncatechars:250 }}...</p>
+        <a href="/{{note.slug}}" class="stretched-link">Continue reading</a>
+    </div>
+</div>
+{% endfor %}
+
+</div>
+{% endblock body %}

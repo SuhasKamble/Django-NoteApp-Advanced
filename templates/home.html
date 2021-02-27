@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block body %}
+<div class="container my-4">
+    <h2 class="my-3">Your Notes</h2>
+
+    {% if allNotes|length < 1 %} <div class="blog-container">
+        <h4 class="my-3 p-4">Your notes are empty.</h4>
+        <a href='/createNote' class="button btn btn-primary">Add a Note</a>
+
+</div>
+{% endif %}
+{% for note in allNotes %}
+<div class="row my-3 g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary">Suhas</strong>
+        <h3 class="mb-0">{{note.title}}</h3>
+        <div class="mb-1 text-muted">{{note.timestamp}}</div>
+        <p class="card-text mb-auto">{{note.summary | truncatechars:250 }}...</p>
+        <div>
+            <a href="/{{note.slug}}" class="mt-2 btn btn-outline-primary ">Continue reading</a>
+        </div>
+        <div>
+            <form action="/delete" class="mx-2" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="deleteId" value="{{note.id}}">
+                <div class="float-end">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </div>
+            </form>
+            <form action="/edit" class="mx-2" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="editId" value="{{note.id}}">
+                <div class="float-end">
+                    <button class="btn btn-primary" type="submit">Edit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endfor %}
+
+</div>
+{% endblock body %}

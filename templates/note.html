@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container my-4">
+    <h6 class="text-primary">{{note.timestamp}}</h6>
+    <h1>{{note.title}}</h1>
+    <div>{{note.content | safe}}</div>
+    <form action="/delete" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="deleteId" value="{{note.id}}">
+        <div class="float-end">
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </div>
+    </form>
+</div>
+{% endblock body %}
